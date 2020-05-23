@@ -1,0 +1,22 @@
+html {
+    font-size: 10px;
+}
+
+body {
+    font-size: 2rem;
+}
+
+h1 {
+    text-align: center;
+}
+
+
+/* Set wrapper text-align to center, and .d3-div to display inline block 
+   to center*/
+.wrapper {
+    text-align: center;
+}
+
+.d3-div {
+    display: inline-block;
+}
