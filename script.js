@@ -10,6 +10,7 @@ var url = "https://raw.githubusercontent.com/FreeCodeCamp/ProjectReferenceData/m
 var width = 800;
 var height = 400;
 var marginLeft = 60;
+var marginTop = 0;
 
 // Add an h1 title.
 var section = d3.select(".header-info")
@@ -20,11 +21,14 @@ var section = d3.select(".header-info")
 
 // Declare svg d3 object.
 var svgStuff = d3.select(".d3-div")
-            .append("svg")
+            .append("svg")             // will append svg to this!
             .attr("width", width*1.15)
             .attr("height", height*1.15);
 
 
+function setColor(desc){
+    return (desc.length === 0) ? ("Green") : ("Red");
+}
 
 // Get json data using D3 fetch method.
 d3.json(url)
@@ -62,7 +66,7 @@ d3.json(url)
 	let xMin = d3.min(year);
 	let xMax = d3.max(year);
 	let yearScale = d3.scaleLinear()
-	    .domain([xMin, xMax + 1]) // add one so last tick label appears
+	    .domain([xMin - 1, xMax + 1]) // add/subtract one so last tick label appear and data points in graph
 	    .range([0, width]);
 	let xAxis = d3.axisBottom(yearScale)
 	              .tickFormat(d3.format("d")); // remove comma in thousands
@@ -70,7 +74,7 @@ d3.json(url)
 	// Plot x-axis.
 	let xAxisPlot = svgStuff.append("g")
 	    .call(xAxis)
-	    .attr("id","x-axis")
+	    .attr("id", "x-axis")
 	    .attr("transform", "translate(" + marginLeft + ","  + height + ")"); //"translate(60, 400)");
 
 
@@ -95,10 +99,21 @@ d3.json(url)
 	let yAxisPlot = svgStuff.append("g")
 	    .call(yAxis)
 	    .attr("id", "y-axis")
-	    .attr("transform", "translate(60, 0)");
+	    .attr("transform", "translate(" + marginLeft + "," + marginTop + ")");
 	
 
-	
+	// Add scalable vector graphic for creating scatter plot.
+	d3.select("svg")
+	    .selectAll("circle")
+	    .data(data)
+	    .enter()
+	    .append("circle")
+	    .attr("class", "dot")
+	    .attr("cx", (d, i) => yearScale( year[i] )  )
+	    .attr("cy", (d, i) => minutesScale( minutes[i] ) )//height - minutes[i] )
+	    .attr("r", 3)
+            .attr("transform", "translate(" + marginLeft + "," + marginTop + ")") // Move the circles to the right to lign up with x-axis.
+	    .attr("fill", (d, i) => setColor( description[i] ) );
 
 	
   })
