@@ -20,3 +20,18 @@ h1 {
 .d3-div {
     display: inline-block;
 }
+
+#tooltip {
+  position: absolute;
+  display: none; /*will set inline block in d3*/
+  min-width: 80px;
+  height: auto;
+  background: white;
+  opacity: 0.6;
+  border: 1px solid #f50707;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  text-align: left;
+  color: black;
+  box-shadow: 1px 1px 20px #f50707;
+}

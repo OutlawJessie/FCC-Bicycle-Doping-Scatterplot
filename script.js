@@ -18,6 +18,12 @@ var section = d3.select(".header-info")
 	        .attr("id","title")
 	        .text("Bicycle Doping Incidents on Alpe d'Huez");
 
+// Tooltip for mouseover inside json function.
+var tooltip = d3.select("body") // Doesn't work if you select d3-div
+    .append("div")
+    .attr("id","tooltip")
+    .style("display","none"); // will set display of tooltip for each circle
+
 
 // Declare svg d3 object.
 var svgStuff = d3.select(".d3-div")
@@ -113,7 +119,18 @@ d3.json(url)
 	    .attr("cy", (d, i) => minutesScale( minutes[i] ) )//height - minutes[i] )
 	    .attr("r", 3)
             .attr("transform", "translate(" + marginLeft + "," + marginTop + ")") // Move the circles to the right to lign up with x-axis.
-	    .attr("fill", (d, i) => setColor( description[i] ) );
+	    .attr("fill", (d, i) => setColor( description[i] ) )
+	    .on("mouseover", (d, i) => {
+		tooltip.attr("data-year",year[i])
+		.style('display', 'inline-block')		
+		    .style("left", d3.event.pageX - 120 + "px") // Position x coordinate of tooltip relative to current bar
+	        .style("top", d3.event.pageY - 120 + "px") // Position y coordinate of tooltip relative to current bar
+	        .style('transform', 'translateX(60px)')
+	               .html(d.Name);
+	})
+	.on("mouseout", (d) => {
+	    tooltip.style("display","none");
+	});
 
 	
   })
