@@ -32,8 +32,24 @@ var svgStuff = d3.select(".d3-div")
             .attr("height", height*1.15);
 
 
+// Create a simple legend following this example: https://www.d3-graph-gallery.com/graph/custom_legend.html.
+var legendColors = ["green", "red"];
+var legend = d3.select("svg")
+    .append("g")
+    .attr("id", "legend");
+
+// Legend background box.
+//legend.select("#legend").append("circle").attr("cx", width + marginLeft).attr("cy",130).attr("r", 6).style("fill", legendColors[0]);
+legend.append("circle").attr("cx", width + marginLeft).attr("cy",130).attr("r", 6).style("fill", legendColors[0]);
+legend.append("circle").attr("cx",width + marginLeft).attr("cy",160).attr("r", 6).style("fill", legendColors[1]);
+legend.append("text").attr("x", width + marginLeft +  20).attr("y", 130).text("Doping Accusation").style("font-size", "15px").attr("alignment-baseline","middle");
+legend.append("text").attr("x", width + marginLeft + 20).attr("y", 160).text("No Accusation").style("font-size", "15px").attr("alignment-baseline","middle");
+
+
+
+/* Function for coloring each data point based on legend colors. */
 function setColor(desc){
-    return (desc.length === 0) ? ("Green") : ("Red");
+    return (desc.length === 0) ? (legendColors[0]) : (legendColors[1]);
 }
 
 // Get json data using D3 fetch method.
@@ -106,7 +122,6 @@ d3.json(url)
 	    .call(yAxis)
 	    .attr("id", "y-axis")
 	    .attr("transform", "translate(" + marginLeft + "," + marginTop + ")");
-	
 
 	// Add scalable vector graphic for creating scatter plot.
 	d3.select("svg")
@@ -120,6 +135,8 @@ d3.json(url)
 	    .attr("r", 3)
             .attr("transform", "translate(" + marginLeft + "," + marginTop + ")") // Move the circles to the right to lign up with x-axis.
 	    .attr("fill", (d, i) => setColor( description[i] ) )
+	    .attr("data-xvalue", (d, i) => year[i] ) // Pass test 5
+	    .attr("data-yvalue", (d, i) => minutes[i] ) // Pass test 5
 	    .on("mouseover", (d, i) => {
 		tooltip.attr("data-year",year[i])
 		.style('display', 'inline-block')		
@@ -131,6 +148,17 @@ d3.json(url)
 	.on("mouseout", (d) => {
 	    tooltip.style("display","none");
 	});
+
+
+	/*legend.selectAll("g")
+	    .data(data)
+	    .enter()
+	    .append("g")
+            .style("position", "absolute")
+	    .attr("x", 0.7*width)
+	    .attr("y", 0.5*height)
+	    .attr("width", 175 )
+	    .attr("height", 100);*/
 
 	
   })

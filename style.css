@@ -21,6 +21,16 @@ h1 {
     display: inline-block;
 }
 
+
+
+/* Add some padding so y-axis ticks and label don't get truncated. */
+svg {
+    padding: 10rem;
+}
+
+
+
+
 #tooltip {
   position: absolute;
   display: none; /*will set inline block in d3*/
