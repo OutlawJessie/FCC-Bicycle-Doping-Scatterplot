@@ -38,12 +38,14 @@ var legend = d3.select("svg")
     .append("g")
     .attr("id", "legend");
 
+//d3.select("#legend").append("rect").attr("x", width - 18).attr("width", 200).attr("height", 100).style("fill", "orange").style("border-radius", "50%");
+
 // Legend background box.
-//legend.select("#legend").append("circle").attr("cx", width + marginLeft).attr("cy",130).attr("r", 6).style("fill", legendColors[0]);
-legend.append("circle").attr("cx", width + marginLeft).attr("cy",130).attr("r", 6).style("fill", legendColors[0]);
-legend.append("circle").attr("cx",width + marginLeft).attr("cy",160).attr("r", 6).style("fill", legendColors[1]);
-legend.append("text").attr("x", width + marginLeft +  20).attr("y", 130).text("Doping Accusation").style("font-size", "15px").attr("alignment-baseline","middle");
-legend.append("text").attr("x", width + marginLeft + 20).attr("y", 160).text("No Accusation").style("font-size", "15px").attr("alignment-baseline","middle");
+d3.select("#legend").append("circle").attr("cx", width + marginLeft).attr("cy",130).attr("r", 6).style("fill", legendColors[1]);
+//legend.append("circle").attr("cx", width + marginLeft).attr("cy",130).attr("r", 6).style("fill", legendColors[0]);
+d3.select("#legend").append("circle").attr("cx",width + marginLeft).attr("cy",160).attr("r", 6).style("fill", legendColors[0]);
+d3.select("#legend").append("text").attr("x", width + marginLeft +  20).attr("y", 130).text("Doping Accusation").style("font-size", "15px").attr("alignment-baseline","middle");
+d3.select("#legend").append("text").attr("x", width + marginLeft + 20).attr("y", 160).text("No Accusation").style("font-size", "15px").attr("alignment-baseline","middle");
 
 
 
@@ -106,7 +108,7 @@ d3.json(url)
 	let yMinFixAxis = new Date(yMin);
 	let yMaxFixAxis = new Date(yMax);
 	yMinFixAxis.setSeconds(yMinFixAxis.getMinutes() - 1); // use this minima for domain so can see ticks
-	yMaxFixAxis.setSeconds(yMaxFixAxis.getMinutes() + 1); // use this maxima for domain so can see ticks
+	yMaxFixAxis.setSeconds(yMaxFixAxis.getMinutes() + 10); // use this maxima for domain so can see ticks. Adding 10 (instead of 1) fixes tooltip issue.
 
 	// Assemble y-axis.
 	let timeFormat = d3.timeFormat("%M:%S");
@@ -141,9 +143,11 @@ d3.json(url)
 		tooltip.attr("data-year",year[i])
 		.style('display', 'inline-block')		
 		    .style("left", d3.event.pageX - 120 + "px") // Position x coordinate of tooltip relative to current bar
-	        .style("top", d3.event.pageY - 120 + "px") // Position y coordinate of tooltip relative to current bar
-	        .style('transform', 'translateX(60px)')
-	               .html(d.Name);
+	        .style("top", d3.event.pageY + 60 + "px") // Position y coordinate of tooltip relative to current bar
+	        .style('transform', 'translateX(' + marginLeft + 'px)')
+	            .html(d.Name + ' (' + d.Nationality + ')' +
+			  '<br>' + 'Year: ' + d.Year + ', Time: ' + d.Time + ', Place: ' + d.Place +
+			 '<br>' + d.Doping);
 	})
 	.on("mouseout", (d) => {
 	    tooltip.style("display","none");
