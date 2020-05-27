@@ -33,7 +33,7 @@ var svgStuff = d3.select(".d3-div")
 
 
 // Create a simple legend following this example: https://www.d3-graph-gallery.com/graph/custom_legend.html.
-var legendColors = ["green", "red"];
+var legendColors = ["#D35FB7", "#FEFE62"];
 var legend = d3.select("svg")
     .append("g")
     .attr("id", "legend");
@@ -41,9 +41,9 @@ var legend = d3.select("svg")
 //d3.select("#legend").append("rect").attr("x", width - 18).attr("width", 200).attr("height", 100).style("fill", "orange").style("border-radius", "50%");
 
 // Legend background box.
-d3.select("#legend").append("circle").attr("cx", width + marginLeft).attr("cy",130).attr("r", 6).style("fill", legendColors[1]);
+d3.select("#legend").append("circle").attr("cx", width + marginLeft).attr("cy",130).attr("r", 6).style("fill", legendColors[1]).style("stroke", "black");
 //legend.append("circle").attr("cx", width + marginLeft).attr("cy",130).attr("r", 6).style("fill", legendColors[0]);
-d3.select("#legend").append("circle").attr("cx",width + marginLeft).attr("cy",160).attr("r", 6).style("fill", legendColors[0]);
+d3.select("#legend").append("circle").attr("cx",width + marginLeft).attr("cy",160).attr("r", 6).style("fill", legendColors[0]).style("stroke", "black");
 d3.select("#legend").append("text").attr("x", width + marginLeft +  20).attr("y", 130).text("Doping Accusation").style("font-size", "15px").attr("alignment-baseline","middle");
 d3.select("#legend").append("text").attr("x", width + marginLeft + 20).attr("y", 160).text("No Accusation").style("font-size", "15px").attr("alignment-baseline","middle");
 
@@ -134,7 +134,8 @@ d3.json(url)
 	    .attr("class", "dot")
 	    .attr("cx", (d, i) => yearScale( year[i] )  )
 	    .attr("cy", (d, i) => minutesScale( minutes[i] ) )//height - minutes[i] )
-	    .attr("r", 3)
+	    .attr("r", 7)
+	    .style("stroke", "black") // add black stroke around circles for contrast
             .attr("transform", "translate(" + marginLeft + "," + marginTop + ")") // Move the circles to the right to lign up with x-axis.
 	    .attr("fill", (d, i) => setColor( description[i] ) )
 	    .attr("data-xvalue", (d, i) => year[i] ) // Pass test 5

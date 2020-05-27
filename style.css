@@ -4,10 +4,13 @@ html {
 
 body {
     font-size: 2rem;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
 }
 
 h1 {
     text-align: center;
+    font-size: 5rem;
 }
 
 
@@ -15,6 +18,7 @@ h1 {
    to center*/
 .wrapper {
     text-align: center;
+    font-size: 2.2rem;
 }
 
 .d3-div {
@@ -37,12 +41,12 @@ svg {
   display: none; /*will set inline block in d3*/
   min-width: 80px;
   height: auto;
-  background: white;
-  opacity: 0.6;
+  background: #94ffdf;
+  opacity: 0.7;
   border: 1px solid #f50707;
   border-radius: 1rem;
   padding: 1.5rem;
   text-align: left;
   color: black;
-  box-shadow: 1px 1px 20px #f50707;
+  box-shadow: 1px 1px 20px #6c96ff;
 }
